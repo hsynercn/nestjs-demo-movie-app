@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { CreateRoomDto } from './dtos/create-room.dto';
 import { UpdateRoomDto } from './dtos/update-room.dto';

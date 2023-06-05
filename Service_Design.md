@@ -15,10 +15,12 @@ nest g module sessions
 nest g controller users
 nest g controller movies
 nest g controller rooms
+nest g controller sessions
 ```
 
 ```cmd
 nest g service users
 nest g service movies
 nest g service rooms
+nest g service sessions
 ```
