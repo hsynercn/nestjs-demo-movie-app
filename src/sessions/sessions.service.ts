@@ -50,12 +50,12 @@ export class SessionsService {
     const roomIdChanged =
       updateSessionDto.roomId && updateSessionDto.roomId !== session.roomId;
     if (dateChanged || timeSlotChanged || roomIdChanged) {
-      const searchForConflictSession = {
+      const possibleNewSession = {
         ...session,
         ...updateSessionDto,
       };
       const conflictingSession = await this.findConflictingSessions(
-        searchForConflictSession,
+        possibleNewSession,
       );
       if (conflictingSession) {
         throw new BadRequestException('Session already exists');

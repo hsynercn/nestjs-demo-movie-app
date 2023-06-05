@@ -1,16 +1,16 @@
-import { IsDate, IsEnum, IsNumber, Optional } from 'class-validator';
+import { IsDate, IsEnum, IsNumber, IsOptional } from 'class-validator';
 import { TimeSlot } from 'src/shared/enums';
 
 export class UpdateSessionDto {
-  @Optional()
+  @IsOptional()
   @IsNumber()
   movieId: number;
 
-  @Optional()
+  @IsOptional()
   @IsNumber()
   roomId: number;
 
-  @Optional()
+  @IsOptional()
   @IsDate()
   date: Date;
 
