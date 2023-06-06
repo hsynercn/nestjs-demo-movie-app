@@ -8,16 +8,25 @@ import { SessionEntity } from './sessions.entity';
 import { Repository } from 'typeorm';
 import { CreateSessionDto } from './dtos/create-session.dto';
 import { UpdateSessionDto } from './dtos/update-session.dto';
+import { RoomsService } from 'src/rooms/rooms.service';
+import { MoviesService } from 'src/movies/movies.service';
 
 @Injectable()
 export class SessionsService {
   constructor(
     @InjectRepository(SessionEntity)
     private readonly sessionRepository: Repository<SessionEntity>,
+    private roomsService: RoomsService,
+    private moviesService: MoviesService,
   ) {}
 
   findOne(id: number) {
+    console.log(`Finding session with id: ${id}`);
     return this.sessionRepository.findOne({ where: { id } });
+  }
+
+  find() {
+    return this.sessionRepository.find();
   }
 
   findWithMovie(movieId: number) {
@@ -29,9 +38,22 @@ export class SessionsService {
   }
 
   async create(newSession: CreateSessionDto) {
+    const room = await this.roomsService.findOne(newSession.roomId);
+    if (!room) {
+      throw new BadRequestException('Session room not found');
+    }
+
+    const movie = await this.moviesService.findOne(newSession.movieId);
+    if (!movie) {
+      throw new BadRequestException('Session movie not found');
+    }
+
     const conflictingSession = await this.findConflictingSessions(newSession);
-    if (conflictingSession) {
-      throw new BadRequestException('Session already exists');
+
+    if (conflictingSession.length > 0) {
+      throw new BadRequestException(
+        'Session already exist with date, room and time slot',
+      );
     }
     const session = this.sessionRepository.create({ ...newSession });
     return this.sessionRepository.save(session);
@@ -42,6 +64,17 @@ export class SessionsService {
     if (!session) {
       throw new BadRequestException('Session not found');
     }
+
+    const room = this.roomsService.findOne(updateSessionDto.roomId);
+    if (!room) {
+      throw new BadRequestException('Session room not found');
+    }
+
+    const movie = this.moviesService.findOne(updateSessionDto.movieId);
+    if (!movie) {
+      throw new BadRequestException('Session movie not found');
+    }
+
     const dateChanged =
       updateSessionDto.date && updateSessionDto.date !== session.date;
     const timeSlotChanged =
@@ -49,6 +82,9 @@ export class SessionsService {
       updateSessionDto.timeSlot !== session.timeSlot;
     const roomIdChanged =
       updateSessionDto.roomId && updateSessionDto.roomId !== session.roomId;
+    console.log(`dateChanged: ${dateChanged}`);
+    console.log(`timeSlotChanged: ${timeSlotChanged}`);
+    console.log(`roomIdChanged: ${roomIdChanged}`);
     if (dateChanged || timeSlotChanged || roomIdChanged) {
       const possibleNewSession = {
         ...session,
@@ -57,8 +93,10 @@ export class SessionsService {
       const conflictingSession = await this.findConflictingSessions(
         possibleNewSession,
       );
-      if (conflictingSession) {
-        throw new BadRequestException('Session already exists');
+      if (conflictingSession.length > 0) {
+        throw new BadRequestException(
+          'Session already exist with date, room and time slot',
+        );
       }
     }
 
@@ -67,7 +105,9 @@ export class SessionsService {
   }
 
   async remove(id: number) {
+    console.log(`Session to remove:`);
     const session = await this.findOne(id);
+    console.log(session);
     if (!session) {
       throw new NotFoundException('Session not found');
     }

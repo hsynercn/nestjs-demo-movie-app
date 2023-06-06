@@ -1,4 +1,6 @@
-import { IsDate, IsEnum, IsNumber, IsOptional } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import { IsDateString, IsEnum, IsNumber, IsOptional } from 'class-validator';
+import { IgnoreUTCTime } from 'src/shared/time';
 import { TimeSlot } from 'src/shared/enums';
 
 export class UpdateSessionDto {
@@ -11,7 +13,8 @@ export class UpdateSessionDto {
   roomId: number;
 
   @IsOptional()
-  @IsDate()
+  @IsDateString({ strict: true })
+  //@Transform(({ value }) => IgnoreTime(new Date(value)))
   date: Date;
 
   @IsEnum(TimeSlot)
