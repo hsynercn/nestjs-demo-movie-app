@@ -1,3 +1,4 @@
+import { TicketState } from 'src/shared/enums';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -10,4 +11,7 @@ export class TicketEntity {
 
   @Column()
   sessionId: number;
+
+  @Column()
+  state: TicketState;
 }

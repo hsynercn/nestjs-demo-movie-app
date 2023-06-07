@@ -7,3 +7,9 @@ export enum TimeSlot {
   TwentyToTwentyTwo = '20:00-22:00',
   TwentyTwoToMidnight = '22:00-00:00',
 }
+
+export enum TicketState {
+  Booked = 'Booked',
+  Canceled = 'Canceled',
+  Used = 'Used',
+}

@@ -10,6 +10,7 @@ import { CreateSessionDto } from './dtos/create-session.dto';
 import { UpdateSessionDto } from './dtos/update-session.dto';
 import { RoomsService } from 'src/rooms/rooms.service';
 import { MoviesService } from 'src/movies/movies.service';
+import { ViewSessionDto } from './dtos/view-session.dto';
 
 @Injectable()
 export class SessionsService {
@@ -21,8 +22,24 @@ export class SessionsService {
   ) {}
 
   findOne(id: number) {
-    console.log(`Finding session with id: ${id}`);
     return this.sessionRepository.findOne({ where: { id } });
+  }
+
+  async findOneHydrated(id: number) {
+    console.log('id', id);
+    const session = await this.findOne(id);
+    console.log('session', session);
+    const room = await this.roomsService.findOne(session.roomId);
+    const movie = await this.moviesService.findOne(session.movieId);
+    const hydratedViewSessionDto: ViewSessionDto = {
+      id: session.id,
+      movieName: movie.name,
+      roomName: room.name,
+      date: session.date,
+      timeSlot: session.timeSlot,
+      capacity: room.capacity,
+    };
+    return hydratedViewSessionDto;
   }
 
   find() {

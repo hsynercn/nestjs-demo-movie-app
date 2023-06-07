@@ -5,7 +5,7 @@ export class CreateMovieDto {
   @ApiProperty()
   @IsString()
   name: string;
-  
+
   @ApiProperty()
   @IsNumber()
   minAge: number;

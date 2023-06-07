@@ -6,7 +6,7 @@ export class UpdateMovieDto {
   @IsString()
   @IsOptional()
   name: string;
-  
+
   @ApiProperty()
   @IsNumber()
   @IsOptional()
