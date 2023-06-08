@@ -17,7 +17,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/shared/roles.decorator';
 import { UserRole } from 'src/shared/enums';
 @ApiBearerAuth()
-@Roles(UserRole.ADMIN)
+@Roles(UserRole.Admin)
 @UseGuards(JwtAuthGuard)
 @Controller('rooms')
 export class RoomsController {
