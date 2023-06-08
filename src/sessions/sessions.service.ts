@@ -16,7 +16,7 @@ import { ViewSessionDto } from './dtos/view-session.dto';
 export class SessionsService {
   constructor(
     @InjectRepository(SessionEntity)
-    private readonly sessionRepository: Repository<SessionEntity>,
+    private sessionRepository: Repository<SessionEntity>,
     private roomsService: RoomsService,
     private moviesService: MoviesService,
   ) {}

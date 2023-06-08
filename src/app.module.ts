@@ -10,19 +10,30 @@ import { SessionsModule } from './sessions/sessions.module';
 import { SessionEntity } from './sessions/sessions.entity';
 import { TicketsModule } from './tickets/tickets.module';
 import { TicketEntity } from './tickets/tickets.entity';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { UserEntity } from './users/users.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [MovieEntity, RoomEntity, SessionEntity, TicketEntity],
+      entities: [
+        MovieEntity,
+        RoomEntity,
+        SessionEntity,
+        TicketEntity,
+        UserEntity,
+      ],
       synchronize: true,
     }),
     MoviesModule,
     RoomsModule,
     SessionsModule,
     TicketsModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

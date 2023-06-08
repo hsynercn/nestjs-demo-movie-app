@@ -13,3 +13,8 @@ export enum TicketState {
   Canceled = 'Canceled',
   Used = 'Used',
 }
+
+export enum UserRole {
+  Admin = 'Admin',
+  Basic = 'Basic',
+}
