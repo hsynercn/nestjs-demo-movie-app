@@ -13,6 +13,8 @@ import { TicketEntity } from './tickets/tickets.entity';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { UserEntity } from './users/users.entity';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/role.guard';
 
 @Module({
   imports: [
@@ -36,6 +38,12 @@ import { UserEntity } from './users/users.entity';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}
