@@ -16,9 +16,8 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/shared/roles.decorator';
 import { UserRole } from 'src/shared/enums';
+import { RolesGuard } from 'src/auth/role.guard';
 @ApiBearerAuth()
-@Roles(UserRole.Admin)
-@UseGuards(JwtAuthGuard)
 @Controller('rooms')
 export class RoomsController {
   constructor(private roomsService: RoomsService) {}
@@ -37,6 +36,8 @@ export class RoomsController {
     return room;
   }
 
+  @Roles(UserRole.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   findAllRooms() {
     return this.roomsService.find();

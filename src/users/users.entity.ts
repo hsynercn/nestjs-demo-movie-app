@@ -1,6 +1,7 @@
 import { UserRole } from 'src/shared/enums';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
+@Unique(['email'])
 @Entity()
 export class UserEntity {
   @PrimaryGeneratedColumn()
