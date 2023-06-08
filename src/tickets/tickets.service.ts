@@ -71,7 +71,6 @@ export class TicketsService {
     const tickets = await this.ticketRepository.find({
       where: { userId: userId },
     });
-    console.log(tickets);
     const hydratedTickets: ViewTicketDto[] = [];
     await Promise.allSettled(
       tickets.map(async (ticket) => {
@@ -112,7 +111,6 @@ export class TicketsService {
   }
 
   async remove(id: number) {
-    console.log('Removing ticket with id: ', id);
     const ticket = await this.findOne(id);
     if (!ticket) {
       throw new BadRequestException('Ticket not found');

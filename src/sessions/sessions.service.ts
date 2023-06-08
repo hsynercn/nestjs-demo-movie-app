@@ -122,7 +122,6 @@ export class SessionsService {
   }
 
   async remove(id: number) {
-    console.log(`Session to remove:`);
     const session = await this.findOne(id);
     console.log(session);
     if (!session) {
