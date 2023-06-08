@@ -18,19 +18,6 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        username: {
-          type: 'string',
-        },
-        password: {
-          type: 'string',
-        },
-      },
-    },
-  })
   async login(@Body() req: LoginUserDto) {
     return this.authService.login(req.username);
   }
