@@ -3,11 +3,11 @@ import { Repository } from 'typeorm/repository/Repository';
 import { TicketEntity } from './tickets.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTicketDto } from './dtos/create-ticket.dto';
-import { SessionsService } from 'src/sessions/sessions.service';
+import { SessionsService } from '../sessions/sessions.service';
 import { ViewTicketDto } from './dtos/view-ticket.dto';
-import { TicketState } from 'src/shared/enums';
+import { TicketState } from '../shared/enums';
 import { UpdateTicketDto } from './dtos/update-ticket.dto';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class TicketsService {
@@ -18,7 +18,6 @@ export class TicketsService {
     private usersService: UsersService,
   ) {}
   async create(newTicket: CreateTicketDto) {
-    //TODO: Add user id check and AGE check after implementing user module
     const session = await this.sessionsService.findOneHydrated(
       newTicket.sessionId,
     );

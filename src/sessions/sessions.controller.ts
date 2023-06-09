@@ -11,11 +11,12 @@ import {
 import { SessionsService } from './sessions.service';
 import { CreateSessionDto } from './dtos/create-session.dto';
 import { UpdateSessionDto } from './dtos/update-session.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
-import { Roles } from 'src/shared/roles.decorator';
-import { UserRole } from 'src/shared/enums';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from '../shared/roles.decorator';
+import { UserRole } from '../shared/enums';
 
 @Controller('sessions')
+@ApiTags('sessions')
 @ApiBearerAuth()
 export class SessionsController {
   constructor(private sessionService: SessionsService) {}
@@ -27,7 +28,7 @@ export class SessionsController {
   @Get('/:id')
   @Roles(UserRole.Admin, UserRole.User)
   async findSession(@Param('id') id: string) {
-    const session = await this.sessionService.findOne(parseInt(id));
+    const session = await this.sessionService.findOneHydrated(parseInt(id));
     if (!session) {
       throw new NotFoundException('Session not found');
     }
@@ -41,7 +42,6 @@ export class SessionsController {
   @Delete('/:id')
   @Roles(UserRole.Admin)
   removeSession(@Param('id') id: string) {
-    console.log('id', id);
     return this.sessionService.remove(parseInt(id));
   }
   @Patch()

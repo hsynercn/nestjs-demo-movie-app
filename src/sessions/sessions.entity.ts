@@ -1,4 +1,4 @@
-import { TimeSlot } from 'src/shared/enums';
+import { TimeSlot } from '../shared/enums';
 import { Entity, Column, PrimaryGeneratedColumn, Index, Unique } from 'typeorm';
 
 @Entity()

@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsDateString, IsEmail, IsEnum, IsString } from 'class-validator';
-import { UserRole } from 'src/shared/enums';
-import { IgnoreUTCTime } from 'src/shared/time';
+import { UserRole } from '../../shared/enums';
+import { IgnoreUTCTime } from '../../shared/time';
 
 export class CreateUserDto {
   @ApiProperty()

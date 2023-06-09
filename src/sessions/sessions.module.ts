@@ -3,8 +3,8 @@ import { SessionsController } from './sessions.controller';
 import { SessionsService } from './sessions.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SessionEntity } from './sessions.entity';
-import { RoomsModule } from 'src/rooms/rooms.module';
-import { MoviesModule } from 'src/movies/movies.module';
+import { RoomsModule } from '../rooms/rooms.module';
+import { MoviesModule } from '../movies/movies.module';
 
 @Module({
   imports: [

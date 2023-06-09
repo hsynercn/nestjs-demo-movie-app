@@ -12,11 +12,12 @@ import {
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dtos/create-ticket.dto';
 import { UpdateTicketDto } from './dtos/update-ticket.dto';
-import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
-import { Roles } from 'src/shared/roles.decorator';
-import { UserRole } from 'src/shared/enums';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { Roles } from '../shared/roles.decorator';
+import { UserRole } from '../shared/enums';
 
 @Controller('tickets')
+@ApiTags('tickets')
 @ApiBearerAuth()
 export class TicketsController {
   constructor(private ticketService: TicketsService) {}

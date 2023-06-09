@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNumber, IsOptional } from 'class-validator';
-import { TicketState } from 'src/shared/enums';
+import { TicketState } from '../../shared/enums';
 
 export class UpdateTicketDto {
   @IsOptional()

@@ -1,4 +1,4 @@
-import { TicketState } from 'src/shared/enums';
+import { TicketState } from '../shared/enums';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()

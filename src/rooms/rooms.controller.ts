@@ -11,17 +11,17 @@ import {
 import { RoomsService } from './rooms.service';
 import { CreateRoomDto } from './dtos/create-room.dto';
 import { UpdateRoomDto } from './dtos/update-room.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
-import { Roles } from 'src/shared/roles.decorator';
-import { UserRole } from 'src/shared/enums';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from '../shared/roles.decorator';
+import { UserRole } from '../shared/enums';
 @ApiBearerAuth()
 @Roles(UserRole.Admin)
+@ApiTags('rooms')
 @Controller('rooms')
 export class RoomsController {
   constructor(private roomsService: RoomsService) {}
   @Post()
   createRoom(@Body() body: CreateRoomDto) {
-    console.log('body', body);
     return this.roomsService.create(body);
   }
 

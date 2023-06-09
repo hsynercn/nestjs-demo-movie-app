@@ -1,5 +1,5 @@
 import { IsDate, IsEnum, IsNumber, IsString } from 'class-validator';
-import { TicketState, TimeSlot } from 'src/shared/enums';
+import { TicketState, TimeSlot } from '../../shared/enums';
 
 export class ViewTicketDto {
   @IsNumber()

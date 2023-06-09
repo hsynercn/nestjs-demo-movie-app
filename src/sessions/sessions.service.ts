@@ -8,8 +8,8 @@ import { SessionEntity } from './sessions.entity';
 import { Repository } from 'typeorm';
 import { CreateSessionDto } from './dtos/create-session.dto';
 import { UpdateSessionDto } from './dtos/update-session.dto';
-import { RoomsService } from 'src/rooms/rooms.service';
-import { MoviesService } from 'src/movies/movies.service';
+import { RoomsService } from '../rooms/rooms.service';
+import { MoviesService } from '../movies/movies.service';
 import { ViewSessionDto } from './dtos/view-session.dto';
 
 @Injectable()
@@ -26,12 +26,10 @@ export class SessionsService {
   }
 
   async findOneHydrated(id: number) {
-    console.log('id', id);
     const session = await this.findOne(id);
     if (!session) {
       throw new NotFoundException('Session not found');
     }
-    console.log('session', session);
     const room = await this.roomsService.findOne(session.roomId);
     const movie = await this.moviesService.findOne(session.movieId);
     const hydratedViewSessionDto: ViewSessionDto = {
@@ -103,9 +101,6 @@ export class SessionsService {
       updateSessionDto.timeSlot !== session.timeSlot;
     const roomIdChanged =
       updateSessionDto.roomId && updateSessionDto.roomId !== session.roomId;
-    console.log(`dateChanged: ${dateChanged}`);
-    console.log(`timeSlotChanged: ${timeSlotChanged}`);
-    console.log(`roomIdChanged: ${roomIdChanged}`);
     if (dateChanged || timeSlotChanged || roomIdChanged) {
       const possibleNewSession = {
         ...session,
@@ -127,7 +122,6 @@ export class SessionsService {
 
   async remove(id: number) {
     const session = await this.findOne(id);
-    console.log(session);
     if (!session) {
       throw new NotFoundException('Session not found');
     }

@@ -1,7 +1,7 @@
 import { Transform, Type } from 'class-transformer';
 import { IsDateString, IsEnum, IsNumber } from 'class-validator';
-import { IgnoreUTCTime } from 'src/shared/time';
-import { TimeSlot } from 'src/shared/enums';
+import { IgnoreUTCTime } from '../../shared/time';
+import { TimeSlot } from '../../shared/enums';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateSessionDto {

@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsDateString, IsEnum, IsNumber, IsOptional } from 'class-validator';
-import { TimeSlot } from 'src/shared/enums';
-import { IgnoreUTCTime } from 'src/shared/time';
+import { TimeSlot } from '../../shared/enums';
+import { IgnoreUTCTime } from '../../shared/time';
 
 export class UpdateSessionDto {
   @ApiProperty()

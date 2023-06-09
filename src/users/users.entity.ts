@@ -1,4 +1,4 @@
-import { UserRole } from 'src/shared/enums';
+import { UserRole } from '../shared/enums';
 import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 @Unique(['email'])
