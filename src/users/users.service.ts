@@ -15,6 +15,10 @@ export class UsersService {
     return this.userRepository.findOne({ where: { email } });
   }
 
+  findOneWithId(id: number) {
+    return this.userRepository.findOne({ where: { id } });
+  }
+
   async createUser(newUser: CreateUserDto) {
     const userExisting = await this.findOne(newUser.email);
     if (userExisting) {

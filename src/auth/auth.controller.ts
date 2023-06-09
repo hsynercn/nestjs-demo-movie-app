@@ -11,11 +11,13 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { LocalAuthGuard } from './local-auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { LoginUserDto } from './dtos/login-user.dto';
+import { Public } from 'src/shared/public.decorator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @Public()
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Body() req: LoginUserDto) {
@@ -26,7 +28,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
-    console.log('req.user', req.user);
     return req.user;
   }
 }

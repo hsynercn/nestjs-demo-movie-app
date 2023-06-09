@@ -6,12 +6,14 @@ import { MoviesModule } from 'src/movies/movies.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SessionsModule } from 'src/sessions/sessions.module';
 import { TicketEntity } from './tickets.entity';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports: [
     RoomsModule,
     MoviesModule,
     SessionsModule,
+    UsersModule,
     TypeOrmModule.forFeature([TicketEntity]),
   ],
   controllers: [TicketsController],

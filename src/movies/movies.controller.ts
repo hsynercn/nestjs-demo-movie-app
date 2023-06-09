@@ -11,15 +11,20 @@ import {
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dtos/create-movie.dto';
 import { UpdateMovieDto } from './dtos/update-movie.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { Roles } from 'src/shared/roles.decorator';
+import { UserRole } from 'src/shared/enums';
 
 @Controller('movie')
+@Roles(UserRole.Admin)
+@ApiBearerAuth()
 export class MoviesController {
   constructor(private moviesService: MoviesService) {}
 
   @Post()
   createUser(@Body() body: CreateMovieDto) {
     console.log('body', body);
-    this.moviesService.create(body);
+    return this.moviesService.create(body);
   }
 
   @Get('/:id')

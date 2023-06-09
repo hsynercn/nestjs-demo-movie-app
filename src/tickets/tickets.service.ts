@@ -7,6 +7,7 @@ import { SessionsService } from 'src/sessions/sessions.service';
 import { ViewTicketDto } from './dtos/view-ticket.dto';
 import { TicketState } from 'src/shared/enums';
 import { UpdateTicketDto } from './dtos/update-ticket.dto';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class TicketsService {
@@ -14,13 +15,24 @@ export class TicketsService {
     @InjectRepository(TicketEntity)
     private ticketRepository: Repository<TicketEntity>,
     private sessionsService: SessionsService,
+    private usersService: UsersService,
   ) {}
   async create(newTicket: CreateTicketDto) {
     //TODO: Add user id check and AGE check after implementing user module
-    const session = await this.sessionsService.findOne(newTicket.sessionId);
+    const session = await this.sessionsService.findOneHydrated(
+      newTicket.sessionId,
+    );
     if (!session) {
       throw new BadRequestException('Session not found');
     }
+    const user = await this.usersService.findOneWithId(newTicket.userId);
+    const timeDiff = Math.abs(Date.now() - user.dateOfBirth.getTime());
+    const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+
+    if (age < session.minAge) {
+      throw new BadRequestException('Improper user age');
+    }
+
     const isCapacityFull = await this.capacityCheck(newTicket);
     if (isCapacityFull) {
       throw new BadRequestException('Session room is full');

@@ -16,5 +16,5 @@ export enum TicketState {
 
 export enum UserRole {
   Admin = 'Admin',
-  Basic = 'Basic',
+  User = 'User',
 }

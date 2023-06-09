@@ -8,6 +8,9 @@ export class ViewSessionDto {
   @IsString()
   movieName: string;
 
+  @IsNumber()
+  minAge: number;
+
   @IsDate()
   date: Date;
 

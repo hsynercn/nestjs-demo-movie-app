@@ -11,15 +11,21 @@ import {
 import { SessionsService } from './sessions.service';
 import { CreateSessionDto } from './dtos/create-session.dto';
 import { UpdateSessionDto } from './dtos/update-session.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { Roles } from 'src/shared/roles.decorator';
+import { UserRole } from 'src/shared/enums';
 
 @Controller('sessions')
+@ApiBearerAuth()
 export class SessionsController {
   constructor(private sessionService: SessionsService) {}
   @Post()
+  @Roles(UserRole.Admin)
   createSession(@Body() body: CreateSessionDto) {
     return this.sessionService.create(body);
   }
   @Get('/:id')
+  @Roles(UserRole.Admin, UserRole.User)
   async findSession(@Param('id') id: string) {
     const session = await this.sessionService.findOne(parseInt(id));
     if (!session) {
@@ -28,15 +34,18 @@ export class SessionsController {
     return session;
   }
   @Get()
+  @Roles(UserRole.Admin, UserRole.User)
   findAllSession() {
     return this.sessionService.find();
   }
   @Delete('/:id')
+  @Roles(UserRole.Admin)
   removeSession(@Param('id') id: string) {
     console.log('id', id);
     return this.sessionService.remove(parseInt(id));
   }
   @Patch()
+  @Roles(UserRole.Admin)
   updateSession(@Param('id') id: string, @Body() body: UpdateSessionDto) {
     return this.sessionService.update(parseInt(id), body);
   }

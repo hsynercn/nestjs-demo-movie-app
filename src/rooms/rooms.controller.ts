@@ -7,24 +7,22 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { CreateRoomDto } from './dtos/create-room.dto';
 import { UpdateRoomDto } from './dtos/update-room.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/shared/roles.decorator';
 import { UserRole } from 'src/shared/enums';
-import { RolesGuard } from 'src/auth/role.guard';
 @ApiBearerAuth()
+@Roles(UserRole.Admin)
 @Controller('rooms')
 export class RoomsController {
   constructor(private roomsService: RoomsService) {}
   @Post()
   createRoom(@Body() body: CreateRoomDto) {
     console.log('body', body);
-    this.roomsService.create(body);
+    return this.roomsService.create(body);
   }
 
   @Get('/:id')
@@ -36,8 +34,6 @@ export class RoomsController {
     return room;
   }
 
-  @Roles(UserRole.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   findAllRooms() {
     return this.roomsService.find();

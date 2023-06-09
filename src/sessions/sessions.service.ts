@@ -28,12 +28,16 @@ export class SessionsService {
   async findOneHydrated(id: number) {
     console.log('id', id);
     const session = await this.findOne(id);
+    if (!session) {
+      throw new NotFoundException('Session not found');
+    }
     console.log('session', session);
     const room = await this.roomsService.findOne(session.roomId);
     const movie = await this.moviesService.findOne(session.movieId);
     const hydratedViewSessionDto: ViewSessionDto = {
       id: session.id,
       movieName: movie.name,
+      minAge: movie.minAge,
       roomName: room.name,
       date: session.date,
       timeSlot: session.timeSlot,

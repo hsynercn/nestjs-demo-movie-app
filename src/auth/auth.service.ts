@@ -21,8 +21,8 @@ export class AuthService {
   async login(user: LoginUserDto) {
     const userEntity = await this.userService.findOne(user.username);
     const payload = {
-      username: user.username,
-      sub: user.password,
+      username: userEntity.email,
+      id: userEntity.id,
       role: userEntity.role,
     };
     return {
