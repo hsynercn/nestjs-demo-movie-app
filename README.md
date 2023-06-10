@@ -107,6 +107,19 @@ Will be responsible for CRUD operations for session entity.
 Will be responsible for CRUD operations for ticket entity.
 
 - A ticket cannot be created for a session that is full, or has an age restriction that is not satisfied by the user.
+- Module will use a state machine to control the ticket state changes. We will use Booked, Used, and Cancelled states. One ticket could move from Booked to Used, or Cancelled states. Other state changes are not allowed.
+
+### UsersModule
+
+Will be responsible for register operation
+
+- Module will use hashing for the password field.
+
+### AuthModule
+
+Will be responsible for authentication, and role based authorization.
+
+- Will use jwt to generate tokens. Tokens will store the user id, and role information.
 
 ## Technical Design
 
@@ -184,7 +197,7 @@ Passport.js is a popular authentication middleware for Node.js. We will use pass
 - App will not use a password expiration.
 - App will not support oauth2 federated authentication with social media accounts.
 
-On the user registration, we will use bcrypt.js module to hash the password.
+On the user registration, we will use bcrypt module to hash the password. Also login will use the bcrypt module to compare the password hash.
 
 NestJS provides the guard system to protect the endpoints. We will require the user to be authenticated for the endpoints that require authentication. We will use JwtAuthGuard for this purpose.
 
