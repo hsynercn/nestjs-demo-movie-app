@@ -4,7 +4,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV);
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
     new ValidationPipe({
@@ -17,9 +16,8 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth()
     .build();
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV);
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();

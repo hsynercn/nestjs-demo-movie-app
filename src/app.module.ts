@@ -29,7 +29,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: (config: ConfigService) => {
         return {
           type: 'sqlite',
-          database: config.get<string>('DATABASE'),
+          database: process.env.DATABASE,
           entities: [
             MovieEntity,
             RoomEntity,

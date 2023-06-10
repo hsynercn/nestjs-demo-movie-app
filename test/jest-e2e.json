@@ -1,5 +1,4 @@
 {
-  "setupFiles": ["<rootDir>/test/setEnvVars.js"],
   "moduleFileExtensions": ["js", "json", "ts"],
   "rootDir": "..",
   "testEnvironment": "node",
