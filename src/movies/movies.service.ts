@@ -21,8 +21,15 @@ export class MoviesService {
     return this.movieRepository.findOne({ where: { id } });
   }
 
-  find() {
-    return this.movieRepository.find();
+  async find(movieName?: string, upperAgeLimit?: number) {
+    const query = this.movieRepository.createQueryBuilder('movie');
+    if (movieName) {
+      query.andWhere('movie.name = :movieName', { movieName });
+    }
+    if (upperAgeLimit) {
+      query.andWhere('movie.minAge <= :upperAgeLimit', { upperAgeLimit });
+    }
+    return await query.getMany();
   }
 
   async update(id: number, updateMovieDto: UpdateMovieDto) {

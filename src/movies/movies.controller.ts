@@ -7,11 +7,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dtos/create-movie.dto';
 import { UpdateMovieDto } from './dtos/update-movie.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { UserRole } from '../shared/enums';
 import { Roles } from '../shared/roles.decorator';
 
@@ -38,9 +39,14 @@ export class MoviesController {
   }
 
   @Get()
+  @ApiQuery({ name: 'movieName', required: false, type: 'string' })
+  @ApiQuery({ name: 'upperAgeLimit', required: false, type: 'string' })
   @Roles(UserRole.Admin, UserRole.User)
-  findAllMovies() {
-    return this.moviesService.find();
+  findAllMovies(
+    @Query('movieName') movieName?: string,
+    @Query('upperAgeLimit') upperAgeLimit?: string,
+  ) {
+    return this.moviesService.find(movieName, parseInt(upperAgeLimit));
   }
 
   @Delete('/:id')

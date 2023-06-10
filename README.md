@@ -132,10 +132,22 @@ In this application:
 - We will use the controllers for the incoming requests.
 - Se will use the guards for the authentication and role policy checks.
 - We will use the interceptors for the logging.
+- We will use TypeORM for the database access.
 
 There are multiple use cases for the interceptors. We can intercept the incoming requests, and outgoing responses. We can use the interceptors to mask the sensitive data, or to log the incoming critical requests.
 
 NOTE: At the current implementation app contain exception throwing part in the controllers. This is not the best practice, we are using the Express for our HTTP client, and it could handle the occurring exceptions and return the proper response. In future if we use our service classes with different connection types we could consider using an exception filter for better handling.
+
+### Endpoint Design
+
+We will use the NestJS capabilities to regulate our endpoints. We will explicitly define the endpoint payload DTO structures and parameters.
+
+For each module we will support CRUD operations in a RESTFUL manner:
+
+- We will provide a POST endpoint for create.
+- We will provide a GET endpoints for individual record retrieval, and list retrieval.
+- We will provide a PATCH endpoint for update.
+- We will provide a DELETE endpoint for delete.
 
 ### Cyclic Dependency Cases
 

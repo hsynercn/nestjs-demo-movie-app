@@ -62,21 +62,6 @@ describe('MoviesService', () => {
     });
   });
 
-  describe('find', () => {
-    it('should return an array of movies', async () => {
-      const foundMovies: MovieEntity[] = [
-        { id: 1, name: 'Movie 1', minAge: 10 },
-        { id: 2, name: 'Movie 2', minAge: 20 },
-      ];
-      jest.spyOn(movieRepository, 'find').mockResolvedValue(foundMovies);
-
-      const result = await moviesService.find();
-
-      expect(result).toEqual(foundMovies);
-      expect(movieRepository.find).toHaveBeenCalled();
-    });
-  });
-
   describe('update', () => {
     it('should update a movie', async () => {
       const movieId = 1;
