@@ -8,7 +8,9 @@ We will install the dependencies:
 npm install
 ```
 
-Will run the app in development mode:
+Will run the app in development mode, swagger should be available at [http://localhost:3000/api](http://localhost:3000/api):
+
+```bash
 
 ```bash
 npm run start
