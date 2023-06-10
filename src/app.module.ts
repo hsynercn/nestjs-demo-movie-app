@@ -19,17 +19,40 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'db.sqlite',
-      entities: [
-        MovieEntity,
-        RoomEntity,
-        SessionEntity,
-        TicketEntity,
-        UserEntity,
-      ],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: () => {
+        console.log('process.env.APPLICATION_ENV', process.env.APPLICATION_ENV);
+        if (process.env.APPLICATION_ENV === 'test') {
+          console.log('Using sqlite in memory database');
+          return {
+            type: 'sqlite',
+            database: ':memory:',
+            entities: [
+              MovieEntity,
+              RoomEntity,
+              SessionEntity,
+              TicketEntity,
+              UserEntity,
+            ],
+            dropSchema: true,
+            synchronize: true,
+            logging: true,
+          };
+        } else {
+          return {
+            type: 'sqlite',
+            database: 'db.sqlite',
+            entities: [
+              MovieEntity,
+              RoomEntity,
+              SessionEntity,
+              TicketEntity,
+              UserEntity,
+            ],
+            synchronize: true,
+          };
+        }
+      },
     }),
     MoviesModule,
     RoomsModule,

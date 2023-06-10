@@ -1,6 +1,7 @@
 {
+  "setupFiles": ["<rootDir>/test/setEnvVars.js"],
   "moduleFileExtensions": ["js", "json", "ts"],
-  "rootDir": ".",
+  "rootDir": "..",
   "testEnvironment": "node",
   "testRegex": ".e2e-spec.ts$",
   "transform": {
