@@ -1,5 +1,35 @@
 # Application Design
 
+## Project Setup
+
+We will install the dependencies:
+
+```bash
+npm install
+```
+
+Will run the app in development mode:
+
+```bash
+npm run start
+```
+
+Will run the unit tests:
+
+```bash
+npm run test
+```
+
+Will run the e2e tests:
+
+```bash
+npm run test:e2e
+```
+
+Current deployment is available at:
+
+[https://hsyncercn-movie-app.herokuapp.com/api](https://hsyncercn-movie-app.herokuapp.com/api)
+
 ## Story
 
 In the defined business domain:
