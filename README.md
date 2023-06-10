@@ -149,6 +149,8 @@ For each module we will support CRUD operations in a RESTFUL manner:
 - We will provide a PATCH endpoint for update.
 - We will provide a DELETE endpoint for delete.
 
+NOTE: For list retrieval current implementation is using defined query parameters. We could consider using GraphQL or other query building approaches for advanced data retrieval needs. But we need to pay attention to security issues, totally flexible query parameters could be a security risk.
+
 ### Cyclic Dependency Cases
 
 Current implementation does not contain any cyclic dependency relations. We need to avoid cyclic dependencies between modules. If one module depends on another module, and other module depends on the first module we have a cyclic dependency case, and possibly we should review the module design.
@@ -215,3 +217,7 @@ We are using 2 env configurations, one for dev and one for test. They have very 
 Whole API is documented with Swagger. We can access the Swagger UI from the /api endpoint. For all API endpoints app has the documentation for payload schemas, and parameters. For further development we can consider adding the response schemas too. NestJS provides integration with the Swagger module, we can see the DTO classes on the Swagger UI. Still it requires minimal configuration with decorators to provide the full functionality.
 
 On the swagger interface all authenticated endpoints are marked with a lock icon. We can use /login endpoint to get token, we need that token to test other endpoints.  
+
+### Production Deployment
+
+Currently Heroku does not provide a free database service. For demo purposes 
