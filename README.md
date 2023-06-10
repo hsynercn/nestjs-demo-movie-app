@@ -149,7 +149,7 @@ For each module we will support CRUD operations in a RESTFUL manner:
 - We will provide a PATCH endpoint for update.
 - We will provide a DELETE endpoint for delete.
 
-NOTE: For list retrieval current implementation is using defined query parameters. We could consider using GraphQL or other query building approaches for advanced data retrieval needs. But we need to pay attention to security issues, totally flexible query parameters could be a security risk.
+NOTE: For list retrieval current implementation is using defined query parameters. We could consider using GraphQL or other query building approaches for advanced data retrieval needs. But we need to pay attention to security issues, totally flexible query parameters could be a security risk. Current implementation does not provide the pagination support, we could consider adding pagination support for the list retrieval endpoints. Hopefully TypeORM will provide the infrastructure for pagination support.
 
 ### Cyclic Dependency Cases
 
@@ -218,6 +218,8 @@ Whole API is documented with Swagger. We can access the Swagger UI from the /api
 
 On the swagger interface all authenticated endpoints are marked with a lock icon. We can use /login endpoint to get token, we need that token to test other endpoints.  
 
-### Production Deployment
+### Heroku Deployment
 
-Currently Heroku does not provide a free database service. For demo purposes 
+Deployed [link](https://hsyncercn-movie-app.herokuapp.com/api#)
+
+Currently, Heroku does not provide a free tier database service, additionally we don't have the full scale capability to verify new users. We depend on a basic user creation endpoint to new users. Under these conditions I have decided to use a file based database on deployment environment, which will be destroyed after every deployment. App will be deployed with the current git repo state of the local Sqlite database.
