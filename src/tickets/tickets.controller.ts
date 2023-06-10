@@ -12,7 +12,12 @@ import {
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dtos/create-ticket.dto';
 import { UpdateTicketDto } from './dtos/update-ticket.dto';
-import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Roles } from '../shared/roles.decorator';
 import { UserRole } from '../shared/enums';
 
@@ -23,6 +28,10 @@ export class TicketsController {
   constructor(private ticketService: TicketsService) {}
 
   @Post()
+  @ApiOperation({
+    summary:
+      'Creates a new ticket for user, user age must be greater than movie age limit and session must have available capacity.',
+  })
   @Roles(UserRole.Admin, UserRole.User)
   createTicket(@Body() body: CreateTicketDto) {
     return this.ticketService.create(body);

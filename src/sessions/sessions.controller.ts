@@ -12,7 +12,7 @@ import {
 import { SessionsService } from './sessions.service';
 import { CreateSessionDto } from './dtos/create-session.dto';
 import { UpdateSessionDto } from './dtos/update-session.dto';
-import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../shared/roles.decorator';
 import { UserRole } from '../shared/enums';
 
@@ -22,6 +22,10 @@ import { UserRole } from '../shared/enums';
 export class SessionsController {
   constructor(private sessionService: SessionsService) {}
   @Post()
+  @ApiOperation({
+    summary:
+      'Creates a new session, only can use existing room and movie IDs. Cannot crete a session with same day, time slot and room.',
+  })
   @Roles(UserRole.Admin)
   createSession(@Body() body: CreateSessionDto) {
     return this.sessionService.create(body);
