@@ -16,42 +16,29 @@ import { UserEntity } from './users/users.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/role.guard';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: `.env.${process.env.NODE_ENV}`,
+      isGlobal: true,
+    }),
     TypeOrmModule.forRootAsync({
-      useFactory: () => {
-        console.log('process.env.APPLICATION_ENV', process.env.APPLICATION_ENV);
-        if (process.env.APPLICATION_ENV === 'test') {
-          console.log('Using sqlite in memory database');
-          return {
-            type: 'sqlite',
-            database: ':memory:',
-            entities: [
-              MovieEntity,
-              RoomEntity,
-              SessionEntity,
-              TicketEntity,
-              UserEntity,
-            ],
-            dropSchema: true,
-            synchronize: true,
-            logging: true,
-          };
-        } else {
-          return {
-            type: 'sqlite',
-            database: 'db.sqlite',
-            entities: [
-              MovieEntity,
-              RoomEntity,
-              SessionEntity,
-              TicketEntity,
-              UserEntity,
-            ],
-            synchronize: true,
-          };
-        }
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return {
+          type: 'sqlite',
+          database: config.get<string>('DATABASE'),
+          entities: [
+            MovieEntity,
+            RoomEntity,
+            SessionEntity,
+            TicketEntity,
+            UserEntity,
+          ],
+          synchronize: true,
+        };
       },
     }),
     MoviesModule,
