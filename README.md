@@ -273,4 +273,4 @@ On the swagger interface all authenticated endpoints are marked with a lock icon
 
 Deployed [link](https://hsyncercn-movie-app.herokuapp.com/api#)
 
-Currently, Heroku does not provide a free tier database service, additionally we don't have the full scale capability to verify new users. We depend on a basic user creation endpoint to new users. Under these conditions I have decided to use a file based database on deployment environment, which will be destroyed after every deployment. App will be deployed with the current git repo state of the local Sqlite database.
+Currently, Heroku does not provide a free tier database service, additionally we don't have the full scale capability to verify new users. We depend on a basic user creation endpoint to add new users. Under these conditions I have decided to use a file based database on deployment environment, which will be destroyed after every deployment. App will be deployed with the current git repo state of the local Sqlite database.
