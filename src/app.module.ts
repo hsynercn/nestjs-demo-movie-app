@@ -13,10 +13,11 @@ import { TicketEntity } from './tickets/tickets.entity';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { UserEntity } from './users/users.entity';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { RolesGuard } from './auth/role.guard';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { LoggingInterceptor } from './interceptors/logging.interceptor';
 
 @Module({
   imports: [
@@ -58,6 +59,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
     },
   ],
 })

@@ -44,8 +44,26 @@ export class SessionsService {
     return hydratedViewSessionDto;
   }
 
-  find() {
-    return this.sessionRepository.find();
+  async find(
+    movieId?: number,
+    roomId?: number,
+    startDate?: Date,
+    endDate?: Date,
+  ) {
+    const query = this.sessionRepository.createQueryBuilder('session');
+    if (movieId) {
+      query.andWhere('session.movieId = :movieId', { movieId });
+    }
+    if (roomId) {
+      query.andWhere('session.roomId = :roomId', { roomId });
+    }
+    if (startDate) {
+      query.andWhere('session.date >= :startDate', { startDate });
+    }
+    if (endDate) {
+      query.andWhere('session.date <= :endDate', { endDate });
+    }
+    return await query.getMany();
   }
 
   findWithMovie(movieId: number) {

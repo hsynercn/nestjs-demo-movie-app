@@ -7,11 +7,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { SessionsService } from './sessions.service';
 import { CreateSessionDto } from './dtos/create-session.dto';
 import { UpdateSessionDto } from './dtos/update-session.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../shared/roles.decorator';
 import { UserRole } from '../shared/enums';
 
@@ -35,9 +36,14 @@ export class SessionsController {
     return session;
   }
   @Get()
+  @ApiQuery({ name: 'movieId', required: false, type: 'string' })
+  @ApiQuery({ name: 'roomId', required: false, type: 'string' })
   @Roles(UserRole.Admin, UserRole.User)
-  findAllSession() {
-    return this.sessionService.find();
+  findAllSession(
+    @Query('movieId') movieId?: string,
+    @Query('roomId') roomId?: string,
+  ) {
+    return this.sessionService.find(parseInt(movieId), parseInt(roomId));
   }
   @Delete('/:id')
   @Roles(UserRole.Admin)
