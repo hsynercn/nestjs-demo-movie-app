@@ -13,7 +13,7 @@ export class LoggingInterceptor implements NestInterceptor {
     const req = context.switchToHttp().getRequest();
     const filteredMethods = new Set(['PATCH', 'POST', 'DELETE']);
     if (filteredMethods.has(req.method)) {
-      console.log(req.method, req.url, 'userId:' + req.user.userId);
+      console.log(req.method, req.url);
     }
 
     return next.handle();

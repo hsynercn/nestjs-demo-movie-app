@@ -16,7 +16,7 @@ import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { UserRole } from '../shared/enums';
 import { Roles } from '../shared/roles.decorator';
 
-@Controller('movie')
+@Controller('movies')
 @ApiTags('movies')
 @ApiBearerAuth()
 export class MoviesController {

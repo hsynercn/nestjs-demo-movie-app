@@ -20,7 +20,7 @@ describe('RoomsController (e2e)', () => {
     const signupResponse = await request(app.getHttpServer())
       .post('/users')
       .send({
-        email: 'admin@mail.com',
+        email: 'testadmin@mail.com',
         password: '1234',
         dateOfBirth: new Date(),
         role: UserRole.Admin,
@@ -29,7 +29,7 @@ describe('RoomsController (e2e)', () => {
 
     const loginResponse = await request(app.getHttpServer())
       .post('/auth/login')
-      .send({ username: 'admin@mail.com', password: '1234' })
+      .send({ username: 'testadmin@mail.com', password: '1234' })
       .expect(201);
     // store the jwt token for the next request
     jwt = loginResponse.body.access_token;

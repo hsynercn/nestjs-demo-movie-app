@@ -11,8 +11,6 @@ npm install
 Will run the app in development mode, swagger should be available at [http://localhost:3000/api](http://localhost:3000/api):
 
 ```bash
-
-```bash
 npm run start
 ```
 
@@ -31,6 +29,14 @@ npm run test:e2e
 Current deployment is available at:
 
 [https://hsyncercn-movie-app.herokuapp.com/api](https://hsyncercn-movie-app.herokuapp.com/api)
+
+Basic Test Guide:
+* There are default users in the database, admin@mail.com - 1234, user@mail.com - 1234.
+* You can create new users with the POST /users endpoint.
+* GET /movie endpoint will list all movies.
+* GET /room endpoint will list all rooms.
+* POST /sessions endpoint will create a new session, we can use existing movies and rooms.
+* POST /tickets endpoint will create a new ticket, for available capacity and valid ages.
 
 ## Story
 
