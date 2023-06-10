@@ -110,7 +110,40 @@ Will be responsible for CRUD operations for ticket entity.
 
 ## Technical Design
 
-## TypeORM, Entities
+### Service Framework, NestJS
+
+Parts of Nest
+
+- Controllers: Handle incoming requests
+- Services: Handles data access and business logic
+- Modules: Groups together code
+- Pipes: Validates incoming data
+- Filters: Handles errors that occur during request handling
+- Guards: Handles authentication
+- Interceptors: Adds extra logic to incoming requests or outgoing responses
+- Repositories: Handles data stored in a DB
+
+We will use the NestJS as our main service framework.  It provides a great foundation for applications. It provides a module system, dependency injection, and a solid middleware system natively.
+
+In this application:
+
+- We will separate our domain to isolate our modules.
+- We will use the service layer for the business logic.
+- We will use the controllers for the incoming requests.
+- Se will use the guards for the authentication and role policy checks.
+- We will use the interceptors for the logging.
+
+There are multiple use cases for the interceptors. We can intercept the incoming requests, and outgoing responses. We can use the interceptors to mask the sensitive data, or to log the incoming critical requests.
+
+NOTE: At the current implementation app contain exception throwing part in the controllers. This is not the best practice, we are using the Express for our HTTP client, and it could handle the occurring exceptions and return the proper response. In future if we use our service classes with different connection types we could consider using an exception filter for better handling.
+
+### Cyclic Dependency Cases
+
+Current implementation does not contain any cyclic dependency relations. We need to avoid cyclic dependencies between modules. If one module depends on another module, and other module depends on the first module we have a cyclic dependency case, and possibly we should review the module design.
+
+Currently we have a linear dependency chain between the modules, initial diagram points the relations. But if we face more complex business rules, for example currently we are not applying any restrictions for room or movie deletion, we could face a cyclic dependency case between our current modules. In this scenario we could consider extracting a new module and service. Still we have the forward ref option for cyclic dependency cases as a last resort.
+
+### TypeORM, Entities
 
 I have selected the TypeORM as the common ORM for all modules. TypeORm is a popular ORM for Node.js applications. It provides isolation from the underlying database technology. We can use the same entities on different databases. Additionally, we will utilize the in memory database for the e2e tests.
 
@@ -122,6 +155,8 @@ For better reliability we will introduce several constraints at the database lev
 - Session will apply a unique constraint for the room, date, and time slot columns.
 
 For several cases we will consider using indexing for better performance, but we should avoid premature optimization. We can plan the optimization steps with metrics.
+
+NOTE: Our entities are taking the auto generated ids from the database. We could consider using uuids for better security.
 
 ### Authentication
 
@@ -154,3 +189,17 @@ For role policy control we will use API endpoint decorators. We will use @Roles 
 I have created unit tests for movies, rooms, session modules. Unit tests are based on the Jest framework. For unit testing strategy spec files are located next to the source files, they will contain the layer behavior tests.
 
 Service layer tests will be only responsible for the business logic. We will mock the repository layer for the service layer tests. If we use other modules in the service layer, we will mock them too. By this way we could test the service layer in fine isolation. Same principle is also applied to the controller layer. For this case we will mock the related service classes. NestJS provides great flexibility with the help of native dependency injection system.
+
+For the e2e test current implementation provides one sample with rooms.e2e-spec.ts, this test suite provides a concept for the in memory e2e tests, we have 2 env configurations. On the test file we can see the Sqlite in memory database configuration. During the e2e test suites will start with a fresh database and we will follow the use cases with API calls. In memory database will be destroyed after the test suite execution.
+
+Large unit test suites and e2e test suites could be slow. In extreme cases it could slow down the CI/CD pipeline. We can consider using parallelization for the test suites in necessary conditions. Yet again at the beginning we should avoid premature optimization. Additionally, very large test suites could be a sign of bad design. Usually they are the product of a monolith.
+
+### Environment Variables
+
+We are using 2 env configurations, one for dev and one for test. They have very limited information at the current form because we don't use any additional AOI integrations or cloud services. Currently app is deployed on the Heroku, app's prod env variables are configured on the Heroku project.
+
+### Swagger
+
+Whole API is documented with Swagger. We can access the Swagger UI from the /api endpoint. For all API endpoints app has the documentation for payload schemas, and parameters. For further development we can consider adding the response schemas too. NestJS provides integration with the Swagger module, we can see the DTO classes on the Swagger UI. Still it requires minimal configuration with decorators to provide the full functionality.
+
+On the swagger interface all authenticated endpoints are marked with a lock icon. We can use /login endpoint to get token, we need that token to test other endpoints.  
