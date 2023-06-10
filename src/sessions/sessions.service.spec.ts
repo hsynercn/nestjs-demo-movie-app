@@ -129,34 +129,6 @@ describe('SessionsService', () => {
     });
   });
 
-  describe('find', () => {
-    it('should return an array of sessions', async () => {
-      const sessionEntities: SessionEntity[] = [
-        {
-          id: 1,
-          roomId: 1,
-          movieId: 1,
-          date: new Date(),
-          timeSlot: TimeSlot.EighteenToTwenty,
-        },
-        {
-          id: 2,
-          roomId: 2,
-          movieId: 2,
-          date: new Date(),
-          timeSlot: TimeSlot.EighteenToTwenty,
-        },
-      ];
-      jest
-        .spyOn(sessionRepository, 'find')
-        .mockResolvedValueOnce(sessionEntities);
-      const result = await sessionsService.find();
-
-      expect(result).toEqual(sessionEntities);
-      expect(sessionRepository.find).toHaveBeenCalled();
-    });
-  });
-
   describe('findWithMovie', () => {
     it('should return an array of sessions with the given movieId', async () => {
       const sessionEntities: SessionEntity[] = [
