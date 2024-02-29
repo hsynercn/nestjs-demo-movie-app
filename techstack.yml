@@ -2,7 +2,7 @@ repo_name: hsynercn/nestjs-demo-movie-app
 report_id: 4abc842e4f94a004e6f753a443882eb7
 version: 0.1
 repo_type: Public
-timestamp: '2024-01-31T10:52:43+00:00'
+timestamp: '2024-02-29T19:45:20+00:00'
 requested_by: hsynercn
 provider: github
 branch: master
@@ -151,7 +151,7 @@ tools:
   last_updated_by: Huseyin Can Ercan
   last_updated_on: 2023-06-05 14:16:23.000000000 Z
 - name: Prettier
-  description: 'Prettier is an opinionated code formatter. '
+  description: Prettier is an opinionated code formatter.
   website_url: https://prettier.io/
   version: 2.8.8
   license: MIT
@@ -165,7 +165,7 @@ tools:
   last_updated_by: Huseyin Can Ercan
   last_updated_on: 2023-06-05 14:16:23.000000000 Z
 - name: SuperTest
-  description: 'A library for testing node.js HTTP servers '
+  description: A library for testing node.js HTTP servers
   website_url: https://www.npmjs.com/package/supertest
   version: 6.3.3
   license: MIT
